@@ -1,0 +1,345 @@
+$color-palette: (primary: #23a6d5,
+  secondary: #23d5ab,
+  tertiary: #3d3d3d,
+  neutral: #FFFDE7);
+
+$font-size:(result-message: 2.5rem,
+  landing-page: 2rem,
+  game-page: 1.5rem,
+  contact: 1rem);
+
+$breakpoints: (laptop: 1000px,
+  tablet: 800px,
+  mobile: 600px);
+
+
+@mixin box-sizing($width, $height : $width) {
+  width: $width;
+  height: $height;
+}
+
+@mixin flexbox ($main-axis : center, $minor-axis : center, $axis : row) {
+  display: flex;
+  justify-content: $main-axis;
+  align-items: $minor-axis;
+  flex-direction: $axis;
+}
+
+
+@function dynamic-text-color($color) {
+  @if (lightness($color) > 50) {
+    @return #000;
+  }
+
+  @else {
+    @return #fff;
+  }
+}
+
+
+@mixin button($background) {
+  $palette: map-get($color-palette, $background);
+  cursor: pointer;
+  border-radius: 50px;
+  background: $palette;
+  color: dynamic-text-color($palette);
+  box-shadow: 0px 0px 10px -2px black;
+
+  &:hover {
+    background: darken($palette, 8%);
+    transition: all 0.3s ease;
+  }
+
+  &:active {
+    background: darken($palette, 25%);
+  }
+}
+
+@mixin links ($link, $action) {
+  $palette-passive: map-get($color-palette, $link);
+  $palette-action: map-get($color-palette, $action);
+  color: darken($palette-passive, 30%);
+  text-decoration: none;
+
+  &:visited {
+    color: lighten($palette-passive, 60%);
+  }
+
+  &:hover {
+    color: $palette-action;
+    text-decoration: underline;
+    transition: all 0.3s ease;
+
+  }
+
+  &:active,
+  &:focus {
+    color: $palette-action;
+    text-decoration: underline;
+
+  }
+}
+
+
+@mixin background-shadow($color) {
+  box-shadow: inset 0px 0px 200px -100px map-get($color-palette, $color);
+}
+
+// computer hand animation
+@keyframes computerHandShaker {
+  0% {
+    transform: translateY(0px) rotate(45deg);
+  }
+
+  30% {
+    transform: translateY(20px);
+  }
+
+  45% {
+    transform: translateY(-20px);
+  }
+
+  60% {
+    transform: translateY(20px);
+  }
+
+  75% {
+    transform: translateY(-30px);
+  }
+
+  100% {
+    transform: translateY(0px);
+
+  }
+}
+
+// class to be used by Js for handling the computer hand animation
+.computerHandShaker {
+  animation: computerHandShaker 1.5s 0s ease-in-out;
+}
+
+// player hand animation
+@keyframes playerHandShaker {
+  0% {
+    transform: rotateY(180deg) rotate(45deg) translateY(0px);
+  }
+
+  30% {
+    transform: rotateY(180deg) translateY(20px);
+  }
+
+  45% {
+    transform: rotateY(180deg) translateY(-20px);
+  }
+
+  60% {
+    transform: rotateY(180deg) translateY(20px);
+  }
+
+  75% {
+    transform: rotateY(180deg) translateY(-30px);
+  }
+
+  100% {
+    transform: rotateY(180deg) translateY(0px);
+
+  }
+}
+
+// class to be used by Js for handling the player hand animation
+.playerHandShaker {
+  animation: playerHandShaker 1.5s ease-in-out both;
+}
+
+// class to be used by Js transition from landing page to game page
+.fadeIn {
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease;
+}
+
+// class to be used by Js transition from landing page to game page
+.fadeOut {
+  opacity: 1;
+  pointer-events: all;
+  transition: all 0.4s ease;
+}
+
+//responsive design
+@mixin laptop-only {
+  @media screen and (max-width: map-get($breakpoints, laptop)) {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @media screen and (max-width: map-get($breakpoints, tablet)) {
+    @content;
+  }
+}
+
+@mixin mobile-only {
+  @media screen and (max-width: map-get($breakpoints, mobile)) {
+    @content;
+  }
+}
+
+body {
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+
+.container {
+  @include box-sizing(100vw, 100vh);
+  @include flexbox;
+  background: linear-gradient(-45deg, map-get($color-palette, primary), map-get($color-palette, secondary));
+  background-size: 200% 200%;
+}
+
+//this is the landing page
+.landing-page {
+  @include box-sizing(100vw, 100vh);
+  @include flexbox(space-around, center, column);
+  @include background-shadow(neutral);
+  position: absolute;
+  font-size: map-get($font-size, landing-page);
+  color: map-get($color-palette, tertiary);
+  text-align: center;
+
+  &__btn {
+    @include button(tertiary);
+    @include box-sizing(25vw, 12.5vh);
+    @include flexbox;
+
+    //mediaqueries
+    @include tablet-only {
+      @include box-sizing(50vw, 13.5vh);
+    }
+
+    @include mobile-only {
+      @include box-sizing(60vw, 15vh);
+    }
+  }
+}
+
+
+.game-page {
+  @include box-sizing(100vw, 100vh);
+  @include flexbox(space-around, center, column);
+  @include background-shadow(neutral);
+  color: map-get($color-palette, tertiary);
+}
+
+.scoreboard {
+  @include flexbox(space-around, center);
+  @include box-sizing(100vw, 10vh);
+  font-size: map-get($font-size, game-page);
+}
+
+.result-message {
+  @include flexbox(center, center);
+  @include box-sizing(100vw, 20vh);
+  font-size: map-get($font-size, result-message);
+}
+
+.playground {
+  @include flexbox(space-around, center);
+  @include box-sizing(100vw, 40vh);
+
+  &__player-hands {
+    transform: rotateY(180deg) rotate(45deg);
+
+    //mediaqueries
+    @include tablet-only {
+      max-width: 35vw;
+    }
+  }
+
+  &__computer-hands {
+    transform: rotate(45deg);
+
+
+    //mediaqueries
+    @include tablet-only {
+      max-width: 35vw;
+    }
+  }
+}
+
+.player-choice {
+  @include flexbox(space-around, center);
+  @include box-sizing(100vw, 20vh);
+  font-size: map-get($font-size, game-page);
+
+  //mediaqueries
+  @include mobile-only() {
+    flex-direction: column;
+  }
+
+  &__rock-btn {
+    @include button(tertiary);
+    @include box-sizing(12.5vw, 7.5vh);
+    @include flexbox;
+
+    //mediaqueries
+    @include tablet-only {
+      @include box-sizing(20vw, 10vh);
+    }
+
+    @include mobile-only() {
+      @include box-sizing(50vw, 10vh);
+      margin: 1vh;
+    }
+  }
+
+  &__paper-btn {
+    @include button(tertiary);
+    @include box-sizing(12.5vw, 7.5vh);
+    @include flexbox;
+
+    //mediaqueries
+    @include tablet-only {
+      @include box-sizing(20vw, 10vh);
+    }
+
+    @include mobile-only() {
+      @include box-sizing(50vw, 10vh);
+      margin: 1vh;
+    }
+  }
+
+  &__scissors-btn {
+    @include button(tertiary);
+    @include box-sizing(12.5vw, 7.5vh);
+    @include flexbox;
+
+    //mediaqueries
+    @include tablet-only {
+      @include box-sizing(20vw, 10vh);
+    }
+
+    @include mobile-only() {
+      @include box-sizing(50vw, 10vh);
+      margin: 1vh;
+    }
+  }
+}
+
+.contact {
+  @include flexbox(space-around, center, column);
+  @include box-sizing(100vw, 10vh);
+  font-size: map-get($font-size, contact);
+
+  //mediaqueries
+  @include mobile-only() {
+    @include box-sizing(80vw, 10vh);
+    margin: 1vh;
+  }
+
+  &__link {
+    @include links(tertiary, neutral);
+  }
+}

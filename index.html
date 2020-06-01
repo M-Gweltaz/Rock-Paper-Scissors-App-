@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="description"
+    content="A free Rock Paper Scissors game for all those hard decisions, or just to chill out !">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A free Rock Paper Scissors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <div class="container">
+    <header class="landing-page">
+      <h1 class="landing-page__game-name">Rock Paper Scissors</h1>
+      <div class="landing-page__btn" type="button">Get ready</div>
+    </header>
+    <main class="game-page fadeIn winningShadow">
+      <div class="scoreboard">
+        <p class="scoreboard__player">Player : <span class="scoreboard__player--score">0</span></p>
+        <p class="scoreboard__computer">Computer : <span class="scoreboard__computer--score">0</span></p>
+      </div>
+      <p class="result-message">Get started</p>
+      <div class="playground">
+        <div><img class="playground__player-hands" src="./Images/rock.png" alt="player hand"></div>
+        <div><img class="playground__computer-hands" src="./Images/rock.png" alt="computer hand"></div>
+      </div>
+      <div class="player-choice">
+        <div class="player-choice__rock-btn" type="button">Rock</div>
+        <div class="player-choice__paper-btn" type="button">Paper</div>
+        <div class="player-choice__scissors-btn" type="button">Scissors</div>
+      </div>
+      <footer class="contact">
+        <p>Interested to see more ? Check my <a class="contact__link" href="https://github.com/M-Gweltaz">Github
+            account</a> or my <a class="contact__link" href="https://www.linkedin.com/in/gweltaz-mary/">linkedin
+            profile</a> !</p>
+      </footer>
+    </main>
+  </div>
+
+  <script asynch src="main.js"></script>
+
+</body>
+
+</html>
