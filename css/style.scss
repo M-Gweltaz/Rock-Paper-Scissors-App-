@@ -12,6 +12,10 @@ $breakpoints: (laptop: 1000px,
   tablet: 800px,
   mobile: 600px);
 
+@function pixelToRem($size) {
+  @return $size / 16 * 1rem;
+}
+
 
 @mixin box-sizing($width, $height : $width) {
   width: $width;
@@ -40,10 +44,10 @@ $breakpoints: (laptop: 1000px,
 @mixin button($background) {
   $palette: map-get($color-palette, $background);
   cursor: pointer;
-  border-radius: 50px;
+  border-radius: pixelToRem(50);
   background: $palette;
   color: dynamic-text-color($palette);
-  box-shadow: 0px 0px 10px -2px black;
+  box-shadow: pixelToRem(0) pixelToRem(0) pixelToRem(10) pixelToRem(-2) black;
 
   &:hover {
     background: darken($palette, 8%);
@@ -82,33 +86,33 @@ $breakpoints: (laptop: 1000px,
 
 
 @mixin background-shadow($color) {
-  box-shadow: inset 0px 0px 200px -100px map-get($color-palette, $color);
+  box-shadow: inset pixelToRem(0) pixelToRem(0) pixelToRem(200) pixelToRem(-100) map-get($color-palette, $color);
 }
 
 // computer hand animation
 @keyframes computerHandShaker {
   0% {
-    transform: translateY(0px) rotate(45deg);
+    transform: translateY(pixelToRem(0)) rotate(45deg);
   }
 
   30% {
-    transform: translateY(20px);
+    transform: translateY(pixelToRem(20));
   }
 
   45% {
-    transform: translateY(-20px);
+    transform: translateY(pixelToRem(-20));
   }
 
   60% {
-    transform: translateY(20px);
+    transform: translateY(pixelToRem(20));
   }
 
   75% {
-    transform: translateY(-30px);
+    transform: translateY(pixelToRem(-30));
   }
 
   100% {
-    transform: translateY(0px);
+    transform: translateY(pixelToRem(0));
 
   }
 }
@@ -121,27 +125,27 @@ $breakpoints: (laptop: 1000px,
 // player hand animation
 @keyframes playerHandShaker {
   0% {
-    transform: rotateY(180deg) rotate(45deg) translateY(0px);
+    transform: rotateY(180deg) rotate(45deg) translateY(pixelToRem(0));
   }
 
   30% {
-    transform: rotateY(180deg) translateY(20px);
+    transform: rotateY(180deg) translateY(pixelToRem(20));
   }
 
   45% {
-    transform: rotateY(180deg) translateY(-20px);
+    transform: rotateY(180deg) translateY(pixelToRem(-20));
   }
 
   60% {
-    transform: rotateY(180deg) translateY(20px);
+    transform: rotateY(180deg) translateY(pixelToRem(20));
   }
 
   75% {
-    transform: rotateY(180deg) translateY(-30px);
+    transform: rotateY(180deg) translateY(pixelToRem(-30));
   }
 
   100% {
-    transform: rotateY(180deg) translateY(0px);
+    transform: rotateY(180deg) translateY(pixelToRem(0));
 
   }
 }
@@ -185,8 +189,8 @@ $breakpoints: (laptop: 1000px,
 }
 
 body {
-  margin: 0px;
-  padding: 0px;
+  margin: pixelToRem(0);
+  padding: pixelToRem(0);
   overflow: hidden;
   font-family: 'Ubuntu', sans-serif;
 }

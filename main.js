@@ -41,7 +41,7 @@ const handAnimation = () => {
 
 
 // function for randomising computer hand choice 
-const getRandomInt = e => (Math.floor(Math.random() * Math.floor(e)));
+const getRandomInt = e => (Math.floor(Math.random() * e));
 
 // scoreboard and result message
 const playerScore = document.querySelector(".scoreboard__player--score");
@@ -50,36 +50,31 @@ const resultMessage = document.querySelector(".result-message");
 const winningMessage = ["You won !", "Good job ;)", "Well Played"];
 const losingMessage = ["You lost :'(", "Bad luck", "Try again ..."];
 
-
-
 // game mechanic
+const tie = () => resultMessage.textContent = "it's a tie";
+const win = () => {
+  resultMessage.textContent = winningMessage[getRandomInt(3)];
+  playerScore.textContent++;
+};
+const lose = () => {
+  resultMessage.textContent = losingMessage[getRandomInt(3)];
+  computerScore.textContent++;
+};
+
 const gameMechanic = (playerHandResult, computerHandResult) => {
-  if (playerHandResult === computerHandResult) {
-    resultMessage.textContent = "it's a tie";
-  } else if (playerHandResult === rock) {
-    if (computerHandResult === scissors) {
-      resultMessage.textContent = winningMessage[getRandomInt(3)];
-      playerScore.textContent++;
-    } else if (computerHandResult === paper) {
-      resultMessage.textContent = losingMessage[getRandomInt(3)];
-      computerScore.textContent++;
-    }
-  } else if (playerHandResult === paper) {
-    if (computerHandResult === rock) {
-      resultMessage.textContent = winningMessage[getRandomInt(3)];
-      playerScore.textContent++;
-    } else if (computerHandResult === scissors) {
-      resultMessage.textContent = losingMessage[getRandomInt(3)];
-      computerScore.textContent++;
-    }
-  } else if (playerHandResult === scissors) {
-    if (computerHandResult === paper) {
-      resultMessage.textContent = winningMessage[getRandomInt(3)];
-      playerScore.textContent++;
-    } else if (computerHandResult === rock) {
-      resultMessage.textContent = losingMessage[getRandomInt(3)];
-      computerScore.textContent++;
-    }
+  switch (playerHandResult) {
+    case computerHandResult:
+      tie();
+      break;
+    case rock:
+      computerHandResult === paper ? lose() : win();
+      break;
+    case paper:
+      computerHandResult === scissors ? lose() : win();
+      break;
+    case scissors:
+      computerHandResult === rock ? lose() : win();
+      break;
   }
 };
 
@@ -126,16 +121,3 @@ function gameStart(e) {
   handAnimation();
   setTimeout(handResultHandling, 1500, e.target.textContent);
 };
-
-
-
-
-
-/* working gameStart without timeOut
-function gameStart(e) {
-  handAnimation();
-  handSwitcher(e.target.textContent);
-  gameMechanic(playerHand.attributes.src.value, computerHand.attributes.src.value);
-
-};
-*/
